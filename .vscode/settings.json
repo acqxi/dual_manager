@@ -33,4 +33,6 @@
         "C:\\Users\\USER\\.conda\\envs\\discordBotBlaz",
         "D:\\VirtualStudio_Code_Programming\\VSCode_Python3_DiscordBot_dual"
     ],
+    "discord.enabled": true,
+    "discord.detailsEditing": "{file_name} @ ({current_line},{current_column})",
 }

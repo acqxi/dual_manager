@@ -33,6 +33,7 @@ extensions = [
     'react.set',
     'cogs.game',
     #'xp_main',
+    'game.3t',
 ]
 
 if __name__ == '__main__':  # Ensures this is the file being ran
