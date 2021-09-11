@@ -59,7 +59,7 @@ class ReactionConfigSetting( commands.Cog ):
         '''
         The default check for this cog whenever a command is used. Returns True if the command is allowed.
         '''
-        return ctx.guild.id in [ 690548499233636362, 741429518484635749, 777758608930766878 ]
+        return ctx.guild.id in [ 690548499233636362, 741429518484635749, 777758608930766878, 847028111441920010 ]
 
     @staticmethod
     async def sentMsgBaseData( sent, guild: discord.Guild, msg: discord.Message ):
