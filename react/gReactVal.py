@@ -1,6 +1,8 @@
-import sqlite3
-import discord
 import os
+import urllib.parse as urlparse
+
+import discord
+import psycopg2
 
 
 class DefaultEmoji():
@@ -14,10 +16,19 @@ class DefaultEmoji():
 
 reactSetInd = {}
 
+url = urlparse.urlparse( os.getenv[ 'DATABASE_URL' ] )
+conn_parse = {
+    'dbname': url.path[ 1: ],
+    'user': url.username,
+    'password': url.password,
+    'host': url.hostname,
+    'port': url.port
+}
+
 
 async def activeFunction( send, guild: discord.Guild ):
     error_code = ''
-    conn = sqlite3.connect( os.path.join( os.path.dirname( __file__ ) + '\\reaction.db' ) )
+    conn = psycopg2.connect( **conn_parse )
     cursor = conn.cursor()
     for row in cursor.execute( f"SELECT msg, emoji, role, type='ind' FROM ind WHERE guild={guild.id}" ):
         #print( [ str( x ) for x in guild.emojis ] )

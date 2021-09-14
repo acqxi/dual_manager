@@ -1,7 +1,7 @@
 import os
-import sqlite3
 
 import discord
+import psycopg2
 from discord.ext import commands
 from discord.ext.commands import context
 from discord.ext.commands.core import has_permissions
@@ -9,7 +9,7 @@ from discord.ext.commands.errors import DisabledCommand
 
 from . import gReactVal
 
-conn = sqlite3.connect( os.path.join( os.path.dirname( __file__ ) + '\\reaction.db' ) )
+conn = psycopg2.connect( **gReactVal.conn_parse )
 cursor = conn.cursor()
 cursor.execute( "CREATE TABLE IF NOT EXISTS ind (guild integer, msg integer, emoji text, role integer, type text)" )
 conn.commit()
@@ -18,7 +18,7 @@ conn.close()
 
 def save_to_sqlite( table, *args ) -> str:
     args = [ f"'{s}'" for s in args ]
-    conn = sqlite3.connect( os.path.join( os.path.dirname( __file__ ) + '\\reaction.db' ) )
+    conn = psycopg2.connect( **gReactVal.conn_parse )
     cursor = conn.cursor()
     if len( list( cursor.execute( f"SELECT * FROM {table} WHERE msg={args[1]} AND emoji={args[2]}" ) ) ):
         sql_exc = f"UPDATE {table} SET role={args[3]},type={args[4]} WHERE msg={args[1]} AND emoji={args[2]}"

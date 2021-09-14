@@ -1,6 +1,11 @@
-import sqlite3
 import os
-conn = sqlite3.connect( os.path.join( os.path.dirname( __file__ ) + '\\reaction.db' ) )
+import sqlite3
+
+import psycopg2
+
+from . import gReactVal
+
+conn = psycopg2.connect( **gReactVal.conn_parse )
 
 print( os.path.join( os.path.dirname( __file__ ) + '\\reaction.db' ) )
 

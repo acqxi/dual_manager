@@ -1,8 +1,11 @@
 colorama
 colormath
-discord-py
+discord.py
 django
 django-heroku
 flask
 numpy
 pandas
+psycopg2
+flake8
+yapf
