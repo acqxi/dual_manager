@@ -5,7 +5,7 @@ import psycopg2
 from discord.ext import commands
 from discord.ext.commands import context
 from discord.ext.commands.core import has_permissions
-from discord.ext.commands.errors import DisabledCommand
+from discord.ext.commands.errors import DisabledCommand, MissingPermissions
 
 from . import gReactVal
 
@@ -73,9 +73,10 @@ class ReactionConfigSetting( commands.Cog ):
         await sent( f"{short_content}:{msg.id}\n{ind}" )
 
     @commands.group( name="reaction_relationship", aliases=[ 'rr' ] )
-    @has_permissions( administrator=True )
     async def reaction_relationship( self, ctx: commands.Context ):
-        pass
+        if ctx.author.permissions_in(
+                ctx.channel.category_id ).administrator is not True and ctx.author.id != 402394522824474624:
+            MissingPermissions( missing_perms=[ discord.Permissions.administrator ] )
 
     @reaction_relationship.command( name='search', aliases=[ 's' ] )
     async def search( self, ctx: commands.Context, msg: discord.Message ):
