@@ -16,7 +16,7 @@ class DefaultEmoji():
 
 reactSetInd = {}
 
-url = urlparse.urlparse( os.getenv[ 'DATABASE_URL' ] )
+url = urlparse.urlparse( os.getenv( 'DATABASE_URL' ) )
 conn_parse = {
     'dbname': url.path[ 1: ],
     'user': url.username,
