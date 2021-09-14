@@ -20,9 +20,12 @@ def save_to_sqlite( table, *args ) -> str:
     args = [ f"'{s}'" for s in args ]
     conn = psycopg2.connect( **gReactVal.conn_parse )
     cursor = conn.cursor()
-    if len( list( cursor.execute( f"SELECT * FROM {table} WHERE msg={args[1]} AND emoji={args[2]}" ) ) ):
-        sql_exc = f"UPDATE {table} SET role={args[3]},type={args[4]} WHERE msg={args[1]} AND emoji={args[2]}"
-    else:
+    try:
+        if len( list( cursor.execute( f"SELECT * FROM {table} WHERE msg={args[1]} AND emoji={args[2]}" ) ) ):
+            sql_exc = f"UPDATE {table} SET role={args[3]},type={args[4]} WHERE msg={args[1]} AND emoji={args[2]}"
+        else:
+            sql_exc = f"INSERT INTO {table} ( guild, msg, emoji, role, type) VALUES ( {','.join(args)} )"
+    except TypeError:
         sql_exc = f"INSERT INTO {table} ( guild, msg, emoji, role, type) VALUES ( {','.join(args)} )"
     print( f"do : {sql_exc}" )
     cursor.execute( sql_exc )
