@@ -11,7 +11,7 @@ from . import gReactVal
 
 conn = psycopg2.connect( **gReactVal.conn_parse )
 cursor = conn.cursor()
-cursor.execute( "CREATE TABLE IF NOT EXISTS ind (guild integer, msg integer, emoji text, role integer, type text)" )
+cursor.execute( "CREATE TABLE IF NOT EXISTS ind (guild bigint, msg bigint, emoji text, role bigint, type text)" )
 conn.commit()
 conn.close()
 
@@ -23,7 +23,7 @@ def save_to_sqlite( table, *args ) -> str:
     if len( list( cursor.execute( f"SELECT * FROM {table} WHERE msg={args[1]} AND emoji={args[2]}" ) ) ):
         sql_exc = f"UPDATE {table} SET role={args[3]},type={args[4]} WHERE msg={args[1]} AND emoji={args[2]}"
     else:
-        sql_exc = f"INSERT INTO {table} VALUES ( {','.join(args)} )"
+        sql_exc = f"INSERT INTO {table} ( guild, msg, emoji, role, type) VALUES ( {','.join(args)} )"
     print( f"do : {sql_exc}" )
     cursor.execute( sql_exc )
     conn.commit()
