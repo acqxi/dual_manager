@@ -21,7 +21,9 @@ def save_to_sqlite( table, *args ) -> str:
     conn = psycopg2.connect( **gReactVal.conn_parse )
     cursor = conn.cursor()
     try:
-        if len( list( cursor.execute( f"SELECT * FROM {table} WHERE msg={args[1]} AND emoji={args[2]}" ) ) ):
+        cursor.execute( f"SELECT * FROM {table} WHERE msg={args[1]} AND emoji={args[2]}" )
+        is_already = len( cursor.fetchall() ) > 0
+        if is_already:
             sql_exc = f"UPDATE {table} SET role={args[3]},type={args[4]} WHERE msg={args[1]} AND emoji={args[2]}"
         else:
             sql_exc = f"INSERT INTO {table} ( guild, msg, emoji, role, type) VALUES ( {','.join(args)} )"

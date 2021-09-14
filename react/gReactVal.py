@@ -31,7 +31,8 @@ async def activeFunction( send, guild: discord.Guild ):
     conn = psycopg2.connect( **conn_parse )
     cursor = conn.cursor()
     try:
-        for row in cursor.execute( f"SELECT msg, emoji, role, type='ind' FROM ind WHERE guild={guild.id}" ):
+        cursor.execute( f"SELECT msg, emoji, role, type='ind' FROM ind WHERE guild={guild.id}" )
+        for row in cursor.fetchall():
             #print( [ str( x ) for x in guild.emojis ] )
             print( row )
             try:
