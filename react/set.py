@@ -74,8 +74,7 @@ class ReactionConfigSetting( commands.Cog ):
 
     @commands.group( name="reaction_relationship", aliases=[ 'rr' ] )
     async def reaction_relationship( self, ctx: commands.Context ):
-        if ctx.author.permissions_in(
-                ctx.channel.category_id ).administrator is not True and ctx.author.id != 402394522824474624:
+        if ctx.author.guild_permissions.administrator is False and ctx.author.id != 402394522824474624:
             MissingPermissions( missing_perms=[ discord.Permissions.administrator ] )
 
     @reaction_relationship.command( name='search', aliases=[ 's' ] )
